@@ -29,16 +29,21 @@ module.exports = {
         siteTitle: '啊郭的博客',
         //  导航菜单项的配置
         nav: [
-            { text: "components", link: "/components/" },
-            { text: "componentsTest", link: "/components/test" },
-            { text: "gitee", link: "https://gitee.com/geeksdidi" },
             {
-                text: "Drop Menu",
+                text: "后端技术",
                 items: [
-                { text: 'Item A', link: '/item-1' },
-                { text: 'Item B', link: '/item-2' },
-                { text: 'Item C', link: '/item-3' }
-                ]
+                    {
+                        // text: "后端技术",
+                        items: [
+                            { text: "Redis", link: "/" },
+                        ],
+                    },
+                    {
+                        items: [
+                            { text: "mysql", link: "/" },
+                        ],
+                    },
+                ],
             }
         ],
         // 外链
@@ -60,28 +65,6 @@ module.exports = {
                         { text: 'Index', link: '/components/button/' },
                         { text: 'One', link: '/' },
                         { text: 'Two', link: '/components/button/' }
-                    ],
-                }
-            ],
-            '/': [
-                {
-                    text: "更新日志",
-                    items: [{
-                        text: "新特性",
-                        link: "/components/log/ "
-                    }]
-                },
-                {
-                    text: "快速开始",
-                    link: "/",
-                    items: []
-                },
-                {
-                    text: "基础组件",
-                    collapsible: true,
-                    items: [
-                        {text: "Button按钮", link: "/components/button/"},
-                        {text: "Icon图标", link: "/components/icon/"}
                     ],
                 }
             ]
