@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: 啊郭的博客
+  name: 啊 郭 的 博 客
 #   text: 木木文水青
   tagline: 技术博客，学习笔记，问题解决方案
   image:
@@ -14,7 +14,7 @@ hero:
       link: /preface/preface
     - theme: alt
       text: my github
-      link: https://gitee.com/geeksdidi
+      link: https://github.com/gyh-up?tab=repositories
 
 # features:
 #   - icon: ⚡️

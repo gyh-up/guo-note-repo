@@ -3,7 +3,7 @@ module.exports = {
     //  标题
     title: "啊郭的博客",
     //  标题的后缀
-    titleTemplate: "学习记录",
+    titleTemplate: "学技术博客，学习笔记，问题解决方案",
     //  描述
     description: "啊郭的博客",
     //  站点的 lang 属性
@@ -14,6 +14,7 @@ module.exports = {
     ignoreDeadLinks: true,  
     //  使用 git commit 获取时间戳
     lastUpdated: true,
+    lastUpdatedText: 'Updated Date',
     //  配置 Markdown 解析器选项
     markdown: {
         theme: 'material-palenight',
@@ -48,7 +49,7 @@ module.exports = {
         ],
         // 外链
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/gyh-up/guo-note'},
+            { icon: 'github', link: 'https://github.com/gyh-up?tab=repositories'},
             { icon: {svg: '<embed src="https://g.csdnimg.cn/static/logo/favicon32.ico" style="border-radius: 100%;width: 20px;height: 20px;" />'}, 
             link: 'https://blog.csdn.net/weixin_42258523?spm=1000.2115.3001.5343'},
         ],
@@ -68,10 +69,6 @@ module.exports = {
                     ],
                 }
             ]
-        },
-        editLink: {
-            pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
-            text: 'Edit this page on GitHub'
         }
     }
 }
