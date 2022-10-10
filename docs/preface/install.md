@@ -1,5 +1,8 @@
 ---
 typora-root-url: ..\public
+title: 博客搭建
+titleTemplate: VitePress + Github 搭建个人博客网站
+description: VitePress + Github 搭建个人博客网站
 ---
 
 参考文档：[VitePress | 由Vite、Vue驱动的静态网站生成器 (process1024.github.io)](https://process1024.github.io/vitepress/)

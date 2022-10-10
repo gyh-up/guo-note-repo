@@ -1,7 +1,7 @@
 ---
   title: 序言
-  titleTemplate: VitePress + Github 搭建个人博客网站,
-  description: VitePress + Github 搭建个人博客网站,
+  titleTemplate: VitePress + Github 搭建个人博客网站
+  description: VitePress + Github 搭建个人博客网站
 ---
 
 # VitePress + Github 搭建个人博客网站
