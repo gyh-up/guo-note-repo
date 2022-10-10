@@ -13,8 +13,8 @@ hero:
       text: 序言
       link: /preface/preface
     - theme: alt
-      text: my github
-      link: https://github.com/gyh-up?tab=repositories
+      text: 博客搭建
+      link: /preface/install
 
 # features:
 #   - icon: ⚡️
