@@ -3,7 +3,7 @@ module.exports = {
     //  标题
     title: "啊郭的博客",
     //  标题的后缀
-    titleTemplate: "学技术博客，学习笔记，问题解决方案",
+    titleTemplate: "技术博客，知识分享，学习笔记，问题解决方案",
     //  描述
     description: "啊郭的博客",
     //  站点的 lang 属性
