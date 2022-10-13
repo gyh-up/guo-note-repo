@@ -18,18 +18,18 @@ hero:
     - theme: alt
       text: Redis
       link: /classify/redis/redis介绍
-    - theme: alt
-      text: Redis
-      link: /classify/redis/redis介绍
-    - theme: alt
-      text: Redis
-      link: /classify/redis/redis介绍
-    - theme: alt
-      text: Redis
-      link: /classify/redis/redis介绍
-    - theme: alt
-      text: Redis
-      link: /classify/redis/redis介绍
+    # - theme: alt
+    #   text: Redis
+    #   link: /classify/redis/redis介绍
+    # - theme: alt
+    #   text: Redis
+    #   link: /classify/redis/redis介绍
+    # - theme: alt
+    #   text: Redis
+    #   link: /classify/redis/redis介绍
+    # - theme: alt
+    #   text: Redis
+    #   link: /classify/redis/redis介绍
   
 features:
   - icon: 🤝
