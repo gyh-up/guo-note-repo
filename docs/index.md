@@ -18,9 +18,9 @@ hero:
     - theme: alt
       text: Redis
       link: /classify/redis/redis介绍
-    # - theme: alt
-    #   text: Redis
-    #   link: /classify/redis/redis介绍
+    - theme: alt
+      text: 计算机网络
+      link: /classify/计算机基础/计算机网络/
     # - theme: alt
     #   text: Redis
     #   link: /classify/redis/redis介绍

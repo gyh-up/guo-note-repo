@@ -36,14 +36,19 @@ module.exports = {
                     {
                         // text: "后端技术",
                         items: [
-                            { text: "Redis", link: "/" },
+                            { text: "Redis", link: "/classify/redis/redis介绍" },
                         ],
-                    },
+                    }
+                ]
+            },
+            {
+                text: "计算机基础",
+                items: [
                     {
                         items: [
-                            { text: "mysql", link: "/" },
+                            { text: "计算机网络", link: "/classify/计算机基础/计算机网络/" },
                         ],
-                    },
+                    }
                 ],
             }
         ],
@@ -57,16 +62,16 @@ module.exports = {
         sidebar: {
             '/classify/redis/': [
                 {
-                    text: 'Redis',
+                    text: 'Redis 学习笔记',
                     //  侧边栏折叠
                     collapsible: true,
                     //  默认情况下，所有侧边栏都是展开的, 始页面加载时关闭
                     collapsed: true,
                     items: [
-                        { text: 'redis介绍', link: '/classify/redis/redis介绍' },
-                        { text: 'redis数据类型简介', link: '/classify/redis/redis数据类型简介' },
-                        { text: 'redis底层数据结构', link: '/classify/redis/redis底层数据结构' },
-                        { text: 'redis五大数据类型实现原理', link: '/classify/redis/redis五大数据类型实现原理' },
+                        { text: '一、介绍', link: '/classify/redis/redis介绍' },
+                        { text: '二、数据类型简介', link: '/classify/redis/redis数据类型简介' },
+                        { text: '三、底层数据结构', link: '/classify/redis/redis底层数据结构' },
+                        { text: '四、五大数据类型实现原理', link: '/classify/redis/redis五大数据类型实现原理' },
                         { text: 'redis内存淘汰策略', link: '/classify/redis/redis内存淘汰策略' },
                         { text: 'redis内存回收', link: '/classify/redis/redis内存回收' },
                         { text: 'redis内存碎片率', link: '/classify/redis/redis内存碎片率' },
@@ -80,7 +85,26 @@ module.exports = {
                         { text: 'redis集群', link: '/classify/redis/redis集群' },
                     ],
                 }
-            ]
+            ],
+            '/classify/计算机基础/计算机网络/': [
+                {
+                    text: '计算机网络学习笔记',
+                    collapsible: true,
+                    items: [
+                        { text: '一、IO模型', link: '/classify/计算机基础/计算机网络/IO模型' },
+                    ],
+                }
+            ],
+            // '/classify/redis/': [
+            //     {
+            //         text: 'Redis',
+            //         collapsible: true,
+            //         collapsed: true,
+            //         items: [
+            //             { text: 'redis学习笔记1-介绍', link: '/classify/redis/redis介绍' },
+            //         ],
+            //     }
+            // ]
         }
     }
 }
