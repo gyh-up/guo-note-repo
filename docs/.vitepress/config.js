@@ -13,8 +13,8 @@ module.exports = {
     //  当设置为 true 时，VitePress 不会因为无效链接而导致构建失败。
     ignoreDeadLinks: true,  
     //  使用 git commit 获取时间戳
-    // lastUpdated: true,
-    // lastUpdatedText: 'Updated Date',
+    lastUpdated: true,
+    lastUpdatedText: 'Updated Date',
     //  配置 Markdown 解析器选项
     markdown: {
         theme: 'material-palenight',
