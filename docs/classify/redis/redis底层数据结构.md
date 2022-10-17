@@ -451,9 +451,9 @@ typedef struct intset{
 
 利用此原理即当前节点位置减去上一个节点的长度即得到上一个节点的起始位置，压缩列表可以从尾部向头部遍历。这么做很有效地减少了内存的浪费。
 
-如果我们有一个指向当前节点起始地址的指针 `c` ， 那么我们只要用指针 `c` 减去当前节点 `previous_entry_length` 属性的值， 就可以得出一个指向前一个节点起始地址的指针 `p` 
+如果我们有一个指向当前节点起始地址的指针 `c` ， 那么我们只要用指针 `c` 减去当前节点 `previous_entry_length` 属性的值， 就可以得出一个指向前一个节点起始地址的指针 `p`
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-ziplist压缩列表图4.png)
+![](/redis/redis-ziplist压缩列表图4.png)
 
 **`encoding`：**节点的 `encoding` 属性记录了节点的 `content` 属性所保存数据的类型以及长度
 

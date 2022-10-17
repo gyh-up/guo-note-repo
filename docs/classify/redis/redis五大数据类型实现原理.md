@@ -1,3 +1,7 @@
+---
+typora-root-url: ..\..\public
+---
+
 # redis的五大数据类型实现原理
 
 `Redis` 底层有**六种数据结构**，在 `Redis` 中，并没**有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个对象系统**，这些对象系统也就是前面说的五大数据类型，**每一种数据类型都至少用到了一种数据结构**。
@@ -18,9 +22,9 @@ typedef struct redisObject{
 }robj
 ```
 
-### **type属性**
+### **type 属性**
 
-对象的type属性记录了对象的类型，这个类型就是五大数据类型
+对象的 `type` 属性记录了对象的类型，这个类型就是五大数据类型
 
 | 类型常量       | 对象的名称       |
 | :------------- | :--------------- |
@@ -30,12 +34,12 @@ typedef struct redisObject{
 | `REDIS_SET`    | **集合**对象     |
 | `REDIS_ZSET`   | **有序集合**对象 |
 
-对于 Redis 数据库保存的键值对来说， 键总是一个字符串对象， 而值则可以是字符串对象、列表对象、哈希对象、集合对象或者有序集合对象的其中一种， 因此：
+对于 `Redis` 数据库保存的键值对来说， 键总是一个字符串对象， 而值则可以是字符串对象、列表对象、哈希对象、集合对象或者有序集合对象的其中一种， 因此：
 
 - 当我们称呼一个数据库键为“字符串键”时， 我们指的是“这个数据库键所对应的值为字符串对象”；
 - 当我们称呼一个键为“列表键”时， 我们指的是“这个数据库键所对应的值为列表对象”
 
-### encoding 属性和 \*prt 指针
+### encoding 属性和 `*prt` 指针
 
 对象的 `ptr` 指针指向对象的底层实现数据结构， 而这些数据结构由对象的 `encoding` 属性决定。
 
@@ -67,6 +71,8 @@ typedef struct redisObject{
 | `REDIS_ZSET`   | `REDIS_ENCODING_SKIPLIST`   | 使用跳跃表和字典实现的有序集合对象。                 |
 | `REDIS_ZSET`   | `REDIS_ENCODING_HT`         | 使用跳跃表和字典实现的有序集合对象。                 |
 
+<img src="/redis/redis数据类型映射.png" style="zoom:80%;" />
+
 可以通过如下命令查看值对象的编码：
 
 ```
@@ -75,49 +81,49 @@ OBJECT ENCODING key
 
 ## **字符串对象**
 
-字符串是Redis最基本的数据类型，不仅所有key都是字符串类型，其它几种数据类型构成的元素也是字符串。注意字符串的长度不能超过512M。
+字符串是 `Redis` 最基本的数据类型，不仅所有 `key` 都是字符串类型，其它几种数据类型构成的元素也是字符串。注意字符串的长度不能超过 `512M`。
 
 ### 编码
 
-字符串对象的编码可以是int，raw或者embstr。
+字符串对象的编码可以是 `int`，`raw` 或者 `embstr`。
 
-1. int 编码：保存的是可以用 long 类型表示的整数值。
-2. raw 编码：保存长度大于44字节的字符串（redis3.2版本之前是39字节，之后是44字节）。
-3. embstr 编码：保存长度小于44字节的字符串（redis3.2版本之前是39字节，之后是44字节）
+1. `int` 编码：保存的是可以用 `long` 类型表示的整数值。
+2. `raw` 编码：保存长度大于 ` 44` 字节的字符串（`redis3.2` 版本之前是 `39` 字节，之后是 `44` 字节）。
+3. `embstr` 编码：保存长度小于 `44` 字节的字符串（`redis3.2` 版本之前是 `39` 字节，之后是 `44` 字节）。
 
-由上可以看出，int 编码是用来保存整数值，raw编码是用来保存长字符串，而embstr是用来保存短字符串。其实 embstr 编码是专门用来保存短字符串的一种优化编码。
+由上可以看出，`int` 编码是用来保存整数值，`raw` 编码是用来保存长字符串，而 `embstr` 是用来保存短字符串。其实 `embstr` 编码是专门用来保存短字符串的一种优化编码。
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-sds1.png)
+![](/redis/redis-sds1.png)
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-sds2.png)
+![](/redis/redis-sds2.png)
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-sds3.png)
+![](/redis/redis-sds3.png)
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-sds4.png)
+![](/redis/redis-sds4.png)
 
-embstr与raw都使用redisObject和sds保存数据，区别在于，**embstr的使用只分配一次内存空间**（因此redisObject和sds是连续的），**而raw需要分配两次内存空间**（分别为redisObject和sds分配空间）。因此与raw相比，embstr的好处在于创建时少分配一次空间，删除时少释放一次空间，以及对象的所有数据连在一起，寻找方便。而embstr的坏处也很明显，如果字符串的长度增加需要重新分配内存时，整个redisObject和sds都需要重新分配空间，**因此redis中的embstr实现为只读。**
+`embstr`  与 `raw`  都使用 `redisObject` 和 `sds` 保存数据，区别在于，**`embstr` 的使用只分配一次内存空间**（因此 `redisObject` 和 `sds` 是连续的），**而 `raw` 需要分配两次内存空间**（分别为 `redisObject` 和 `sds` 分配空间）。因此与 `raw` 相比，`embstr` 的好处在于**创建时少分配一次空间，删除时少释放一次空间**，以及对象的所有数据连在一起，寻找方便。而 `embstr` 的坏处也很明显，如果字符串的长度增加需要重新分配内存时，整个 `redisObject` 和 `sds` 都需要重新分配空间，**因此 `redis` 中的 `embstr` 实现为只读。**
 
-　　**ps：Redis中对于浮点数类型也是作为字符串保存的，在需要的时候再将其转换成浮点数类型。**
+**`ps`：`Redis` 中对于浮点数类型也是作为字符串保存的，在需要的时候再将其转换成浮点数类型。**
 
 ### 编码的转换
 
-当 int 编码保存的值不再是整数，或大小超过了long的范围时，自动转化为raw。
+当 `int` 编码保存的值不再是整数，或大小超过了 `long` 的范围时，自动转化为 `raw`。
 
-对于 embstr 编码，由于 Redis 没有对其编写任何的修改程序（embstr 是只读的），在对embstr对象进行修改时，都会先转化为raw再进行修改，因此，只要是修改embstr对象，修改后的对象一定是raw的，无论是否达到了44个字节。
+对于 `embstr` 编码，由于 `Redis` 没有对其编写任何的修改程序（`embstr` 是只读的），在对 `embstr` 对象进行修改时，都会先转化为`raw` 再进行修改，因此，只要是修改 `embstr` 对象，修改后的对象一定是 `raw` 的，无论是否达到了 `44` 个字节。
 
 ## **列表对象**
 
-list 列表，它是简单的字符串列表，按照插入顺序排序，你可以添加一个元素到列表的头部（左边）或者尾部（右边），它的底层实际上是个链表结构。
+`list` 列表，它是简单的字符串列表，按照插入顺序排序，你可以添加一个元素到列表的头部（左边）或者尾部（右边），它的底层实际上是个链表结构。
 
 ### 编码
 
-列表对象的编码可以是 ziplist(压缩列表) 和 linkedlist(双端链表)。 
+列表对象的编码可以是 `ziplist`（压缩列表） 和 `linkedlist` （双端链表）。 
 
 #### ziplist 压缩列表
 
 `ziplist` 编码的列表对象使用压缩列表作为底层实现， 每个压缩列表节点（entry）保存了一个列表元素。
 
-举个例子， 如果我们执行以下 RPUSH 命令， 那么服务器将创建一个列表对象作为 `numbers` 键的值：
+举个例子， 如果我们执行以下 `RPUSH` 命令， 那么服务器将创建一个列表对象作为 `numbers` 键的值：
 
 ```bash
 redis> RPUSH numbers 1 "three" 5
@@ -126,7 +132,7 @@ redis> RPUSH numbers 1 "three" 5
 
 如果 `numbers` 键的值对象使用的是 `ziplist` 编码， 这个这个值对象将会是图 8-5 所展示的样子。
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-list1.png)
+![](/redis/redis-list1.png)
 
 #### linkedlist 双端链表
 
@@ -134,28 +140,28 @@ redis> RPUSH numbers 1 "three" 5
 
 举个例子， 如果前面所说的 `numbers` 键创建的列表对象使用的不是 `ziplist` 编码， 而是 `linkedlist` 编码， 那么 `numbers` 键的值对象将是图 8-6 所示的样子。
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-list2.png)
+![](/redis/redis-list2.png)
 
-注意， `linkedlist` 编码的列表对象在底层的双端链表结构中包含了多个字符串对象， 这种嵌套字符串对象的行为在稍后介绍的哈希对象、集合对象和有序集合对象中都会出现， **字符串对象是 Redis 五种类型的对象中唯一一种会被其他四种类型对象嵌套的对象。**
+注意， `linkedlist` 编码的列表对象在底层的双端链表结构中包含了多个字符串对象， 这种嵌套字符串对象的行为在稍后介绍的哈希对象、集合对象和有序集合对象中都会出现， **字符串对象是 `Redis` 五种类型的对象中唯一一种会被其他四种类型对象嵌套的对象。**
 
-为了简化字符串对象的表示， 我们在图 8-6 使用了一个带有 `StringObject` 字样的格子来表示一个字符串对象， 而 `StringObject` 字样下面的是字符串对象所保存的值。
+为了简化字符串对象的表示， 我们在图 `8-6` 使用了一个带有 `StringObject` 字样的格子来表示一个字符串对象， 而 `StringObject` 字样下面的是字符串对象所保存的值。
 
-比如说， 图 8-7 代表的就是一个包含了字符串值 `"three"` 的字符串对象， 它是 8-8 的简化表示。
+比如说， 图 `8-7` 代表的就是一个包含了字符串值 `"three"` 的字符串对象， 它是 8-8 的简化表示。
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-list3.png)
+![](/redis/redis-list3.png)
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-list4.png)
+![](/redis/redis-list4.png)
 
 ### 编码的转换
 
-当同时满足下面两个条件时，使用ziplist（压缩列表）编码：
+当同时满足下面两个条件时，使用 `ziplist`（压缩列表）编码：
 
-1. 列表保存元素个数小于512个
-2. 每个元素长度小于64字节
+1. 列表保存元素个数小于 512 个
+2. 每个元素长度小于 64 字节
 
-不能满足这两个条件的时候使用 linkedlist 编码。
+不能满足这两个条件的时候使用 `linkedlist` 编码。
 
-上面两个条件可以在redis.conf 配置文件中的 list-max-ziplist-value 选项和 list-max-ziplist-entries 选项进行配置。
+上面两个条件可以在 `redis.conf` 配置文件中的 `list-max-ziplist-value` 选项和 `list-max-ziplist-entries` 选项进行配置。
 
 ## **哈希对象**
 
@@ -172,7 +178,7 @@ redis> RPUSH numbers 1 "three" 5
 - 保存了同一键值对的两个节点总是紧挨在一起， 保存键的节点在前， 保存值的节点在后；
 - 先添加到哈希对象中的键值对会被放在压缩列表的表头方向， 而后来添加到哈希对象中的键值对会被放在压缩列表的表尾方向。
 
-举个例子， 如果我们执行以下 HSET 命令， 那么服务器将创建一个列表对象作为 `profile` 键的值：
+举个例子， 如果我们执行以下 `HSET` 命令， 那么服务器将创建一个列表对象作为 `profile` 键的值：
 
 ```
 redis> HSET profile name "Tom"
@@ -187,9 +193,9 @@ redis> HSET profile career "Programmer"
 
 如果 `profile` 键的值对象使用的是 `ziplist` 编码， 那么这个值对象将会是图 8-9 所示的样子， 其中对象所使用的压缩列表如图 8-10 所示。
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-hash1.png)
+![](/redis/redis-hash1.png)
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-hash2.png)
+![](/redis/redis-hash2.png)
 
 #### hashtable 字典
 
@@ -200,26 +206,26 @@ redis> HSET profile career "Programmer"
 
 举个例子， 如果前面 `profile` 键创建的不是 `ziplist` 编码的哈希对象， 而是 `hashtable` 编码的哈希对象， 那么这个哈希对象应该会是图 8-11 所示的样子。
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-hash3.png)
+![](/redis/redis-hash3.png)
 
-hashtable 编码的哈希表对象底层使用字典数据结构，哈希对象中的每个键值对都使用一个字典键值对。
+`hashtable` 编码的哈希表对象底层使用字典数据结构，哈希对象中的每个键值对都使用一个字典键值对。
 
-在前面介绍压缩列表时，我们介绍过压缩列表是Redis为了节省内存而开发的，是由一系列特殊编码的连续内存块组成的顺序型数据结构，**相对于字典数据结构，压缩列表用于元素个数少、元素长度小的场景**。其优势在于集中存储，节省空间。
+在前面介绍压缩列表时，我们介绍过压缩列表是 `Redis`为了节省内存而开发的，是由一系列特殊编码的连续内存块组成的顺序型数据结构，**相对于字典数据结构，压缩列表用于元素个数少、元素长度小的场景**。其优势在于集中存储，节省空间。
 
 ### 编码的转换
 
-和上面列表对象使用 ziplist 编码一样，当同时满足下面两个条件时，使用ziplist（压缩列表）编码：
+和上面列表对象使用 `ziplist` 编码一样，当同时满足下面两个条件时，使用 `ziplist`（压缩列表）编码：
 
-1. 列表保存元素个数小于512个
-2. 每个元素长度小于64字节
+1. 列表保存元素个数小于 512 个
+2. 每个元素长度小于 64 字节
 
-不能满足这两个条件的时候使用 hashtable 编码。
+不能满足这两个条件的时候使用 `hashtable` 编码。
 
 上面两个条件可以通过配置文件中的 `hash-max-ziplist-value` 选项和 `hash-max-ziplist-entries` 选项进行修改。
 
 ## **集合对象**
 
-集合对象 set 是 string 类型（整数也会转换成 string 类型进行存储）的无序集合。注意集合和列表的区别：集合中的元素是无序的，因此不能通过索引来操作元素；集合中的元素不能有重复。
+集合对象 `set` 是 `string` 类型（整数也会转换成 `string` 类型进行存储）的无序集合。注意集合和列表的区别：集合中的元素是无序的，因此不能通过索引来操作元素；集合中的元素不能有重复。
 
 ### 编码
 
@@ -234,7 +240,7 @@ redis> SADD numbers 1 3 5
 (integer) 3
 ```
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-set1.png)
+![](/redis/redis-set1.png)
 
 #### hashtable 字典
 
@@ -247,18 +253,18 @@ redis> SADD fruits "apple" "banana" "cherry"
 (integer) 3
 ```
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-set2.png)
+![](/redis/redis-set2.png)
 
 ### 编码的转换
 
-当集合同时满足以下两个条件时，使用 intset 编码：
+当集合同时满足以下两个条件时，使用 `intset` 编码：
 
 1. 集合对象中所有元素都是整数
-2. 集合对象所有元素数量不超过512
+2. 集合对象所有元素数量不超过 512
 
-不能满足这两个条件的就使用 hashtable 编码。
+不能满足这两个条件的就使用 `hashtable` 编码。
 
-第二个条件可以通过配置文件的 set-max-intset-entries 进行配置。
+第二个条件可以通过配置文件的 `set-max-intset-entries` 进行配置。
 
 ## **有序集合对象**
 
@@ -268,13 +274,13 @@ redis> SADD fruits "apple" "banana" "cherry"
 
 有序集合的编码可以是 `ziplist` 或者 `skiplist` 。
 
-#### ziplist压缩列表
+#### ziplist 压缩列表
 
 `ziplist` 编码的有序集合对象使用压缩列表作为底层实现， 每个集合元素使用两个紧挨在一起的压缩列表节点来保存， 第一个节点保存元素的成员（member）， 而第二个元素则保存元素的分值（score）。
 
 压缩列表内的集合元素按分值从小到大进行排序， 分值较小的元素被放置在靠近表头的方向， 而分值较大的元素则被放置在靠近表尾的方向。
 
-举个例子， 如果我们执行以下 ZADD 命令， 那么服务器将创建一个有序集合对象作为 `price` 键的值：
+举个例子， 如果我们执行以下 `ZADD` 命令， 那么服务器将创建一个有序集合对象作为 `price` 键的值：
 
 ```
 redis> ZADD price 8.5 apple 5.0 banana 6.0 cherry
@@ -283,9 +289,9 @@ redis> ZADD price 8.5 apple 5.0 banana 6.0 cherry
 
 如果 `price` 键的值对象使用的是 `ziplist` 编码， 那么这个值对象将会是图 8-14 所示的样子， 而对象所使用的压缩列表则会是 8-15 所示的样子。
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-zset1.png)
+![](/redis/redis-zset1.png)
 
-![](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-zset2.png)
+![](/redis/redis-zset2.png)
 
 #### skiplist 跳跃表
 
@@ -298,15 +304,17 @@ typedef struct zset {
 } zset;
 ```
 
-说明：其实有序集合单独使用字典或跳跃表其中一种数据结构都可以实现，但是这里使用两种数据结构组合起来，原因是假如我们单独使用字典，虽然能以 O(1) 的时间复杂度查找成员的分值，但是因为**字典是以无序的方式来保存集合元素，所以每次进行范围操作的时候都要进行排序**；假如我们单独使用跳跃表来实现，虽然能执行范围操作，但是查找操作有 O(1)的复杂度变为了O(logN)。
+说明：其实有序集合单独使用字典或跳跃表其中一种数据结构都可以实现，但是这里使用两种数据结构组合起来，原因是假如我们单独使用字典，虽然能以 O(1) 的时间复杂度查找成员的分值，但是因为**字典是以无序的方式来保存集合元素，所以每次进行范围操作的时候都要进行排序**；假如我们单独使用跳跃表来实现，虽然能执行范围操作，但是查找操作由 `O(1)` 的复杂度变为了 `O(logN)`。
 
-因此Redis使用了两种数据结构来共同实现有序集合。**字典可用于查找，而跳跃表可用于执行范围操作。**
+因此 `Redis` 使用了两种数据结构来共同实现有序集合。**字典可用于查找，而跳跃表可用于执行范围操作。**
 
 ### 编码的转换
 
-当有序集合对象同时满足以下两个条件时，对象使用 ziplist 编码：
+当有序集合对象同时满足以下两个条件时，对象使用 `ziplist` 编码：
 
-1. 保存的元素数量小于128；
-2. 保存的所有元素长度都小于64字节。
+1. 保存的元素数量小于 128；
+2. 保存的所有元素长度都小于 64 字节。
 
-不能满足上面两个条件的使用 skiplist 编码。以上两个条件也可以通过Redis配置文件zset-max-ziplist-entries 选项和 zset-max-ziplist-value 进行修改。
+不能满足上面两个条件的使用 `skiplist `编码。
+
+以上两个条件也可以通过 `Redis` 配置文件 `zset-max-ziplist-entries` 选项和 `zset-max-ziplist-value` 进行修改。
