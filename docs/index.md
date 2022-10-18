@@ -16,6 +16,9 @@ hero:
       text: 博客搭建
       link: /preface/install
     - theme: alt
+      text: Leetcode
+      link: /classify/leetcode/
+    - theme: alt
       text: Redis
       link: /classify/redis/redis介绍
     - theme: alt
