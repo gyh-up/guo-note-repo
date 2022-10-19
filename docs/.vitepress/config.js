@@ -52,7 +52,7 @@ module.exports = {
                 ],
             },
             {
-                text: "Leetcode",
+                text: "算法",
                 items: [
                     {
                         items: [
@@ -111,10 +111,11 @@ module.exports = {
                     collapsible: true,
                     items: [
                         { text: '前言', link: '/classify/leetcode/' },
-                        { text: 'leetcode-70（爬楼梯）', link: '/classify/leetcode/leetcode-70（爬楼梯）' },
-                        { text: 'leetcode-1（两数之和）', link: '/classify/leetcode/leetcode-1（两数之和）' },
-                        { text: 'leetcode-88（合并两个有序数组）', link: '/classify/leetcode/leetcode-88（合并两个有序数组）' },
-                        { text: 'leetcode-283（移动零）', link: '/classify/leetcode/leetcode-283（移动零）' },
+                        { text: 'leetcode-70（爬楼梯）', link: '/classify/leetcode/leetcode-70' },
+                        { text: 'leetcode-1（两数之和）', link: '/classify/leetcode/leetcode-1' },
+                        { text: 'leetcode-88（合并两个有序数组）', link: '/classify/leetcode/leetcode-88' },
+                        { text: 'leetcode-283（移动零）', link: '/classify/leetcode/leetcode-283' },
+                        { text: 'leetcode-448（找到所有数组中消失的数字）', link: '/classify/leetcode/leetcode-448' },
                         
                     ],
                 }
