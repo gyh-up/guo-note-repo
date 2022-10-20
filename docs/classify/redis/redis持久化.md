@@ -28,7 +28,7 @@ save 60 10000  //60秒内有10000次更新
 
 #### 手动执行 bgsave/save
 
-**手动触发生成快照 直接执行 `save` 会阻塞主进程，bgsave 的话会 fork 一个子进程完成快照**
+**手动触发生成快照 直接执行 `save` 会阻塞主进程，`bgsave` 的话会 `fork` 一个子进程完成快照**
 
 但是 `redis` 在发生 `RDB` 持久化的过程中有几个问题需要思考
 
@@ -53,6 +53,7 @@ save 60 10000  //60秒内有10000次更新
 
 1. 子进程会共享一部分主进程的数据空间，并且把共享的数据置为 `read-only` 的状态，在这个过程中，子进程以 `rdb` 的协议来实行持久化
 2. **在持久化的过程中是避免不了有新的数据写入的，因为我们有一部分的数据是共享的，两个进程同时拥有一块数据，肯定会导致数据不一致的问题， 但是依赖于操作系统的 `fork` 机制，在修改的时候一定是修改部分内存页的数据，这个时候会触发对应内存页的 `copyonwrite` 的操作，不会影响子进程完成持久化，持久化结束后，主进程会对子进程进行回收**。
+3. `bgsave` 进程中的线程运行后，开始读取主进程的内存数据，也就是 `redis` 的内存数据，**将内存数据写入到 `dump.rdb` 文件中**。此时，如果主进程处理的命令都是读操作，则 `bgsave` 线程不受影响。如果主进程处理了写操作，则会对该命令操作的数据复制一份，生成副本，`bgsave` 进程中的线程会把这个副本写入到 `dump.rdb`文件中，而在这个过程中，主进程仍可执行命令。
 
 
 
@@ -72,13 +73,13 @@ save 60 10000  //60秒内有10000次更新
 
 #### 保存
 
-`RDB` 文件保存在 `dir` 配置指定的目录下，文件名通过 `dbfilename` 配置指定。可以通过执行 `configsetdir{newDir}` 和`configsetdbfilename{newFileName}` 运行期动态执行，当下次运行时 `RDB` 文件会保存到新目录。
+`RDB` 文件保存在 `dir` 配置指定的目录下，文件名通过 `dbfilename` 配置指定。可以通过执行 `config set dir{newDir}` 和`config set dbfilename{newFileName}` 运行期动态执行，当下次运行时 `RDB` 文件会保存到新目录。
 
-当遇到坏盘或磁盘写满等情况时，可以通过 `configsetdir{newDir}` 在线修改文件路径到可用的磁盘路径，之后执行 `bgsave` 进行磁盘切换，同样适用于 `AOF` 持久化文件。如：`configsetdir/redis6CONFIGSETdbfilenameaa.rdb`
+当遇到坏盘或磁盘写满等情况时，可以通过 `config set dir{newDir}` 在线修改文件路径到可用的磁盘路径，之后执行 `bgsave` 进行磁盘切换，同样适用于 `AOF` 持久化文件。如：`config set dir/redis6 CONFIG SET db filenameaa.rdb`
 
 #### 压缩
 
-`Redis` 默认采用 `LZF` 算法对生成的 `RDB` 文件做压缩处理，压缩后的文件远远小于内存大小，默认开启，可以通过参数`configsetrdbcompression{yes|no}` 动态修改。
+`Redis` 默认采用 `LZF` 算法对生成的 `RDB` 文件做压缩处理，压缩后的文件远远小于内存大小，默认开启，可以通过参数`config set rdb compression{yes|no}` 动态修改。
 
 虽然压缩 `RDB` 会消耗 `CPU`，但可大幅降低文件的体积，方便保存到硬盘或通过网络发送给从节点，因此线上建议开启。
 
@@ -92,24 +93,23 @@ save 60 10000  //60秒内有10000次更新
 
 #### 缺点
 
-1. `RDB` 方式数据没办法做到实时持久化/秒级持久化如果服务器宕机的话，采用 `RDB` 的方式会造成某个时段内数据的丢失，比如我们设置 `10` 分钟同步一次或 `5` 分钟达到 `1000` 次写入就同步一次，那么如果还没达到触发条件服务器就死机了，那么这个时间段的数据会丢失。
+1. `RDB` 方式数据没办法做到实时持久化/秒级持久化，如果服务器宕机的话，采用 `RDB` 的方式会造成某个时段内数据的丢失，比如我们设置 `10` 分钟同步一次或 `5` 分钟达到 `1000` 次写入就同步一次，那么如果还没达到触发条件服务器就死机了，那么这个时间段的数据会丢失。
 2. 使用 `bgsave` 命令在 `forks` 子进程时，如果数据量太大，`forks` 的过程也会发生阻塞，另外，`forks` 子进程会耗费内存。
 3. **针对 `RDB` 不适合实时持久化的问题，`Redis` 提供了 `AOF` 持久化方式来解决。**
 
 ## AOF持久化
 
-AOF（append only file）持久化：与RDB存储某个时刻的快照不同，AOF持久化方式会记录客户端对服务器的每一次写操作命令到日志当中，并将这些写操作以Redis协议追加保存到以后缀为aof文件末尾。
+`AOF（append only file）` 持久化：与 `RDB` 存储某个时刻的快照不同，`AOF` 持久化方式会记录客户端对服务器的**每一次写操作命令到日志当中**，并将这些写操作以 `Redis` 协议追加保存到以后缀为 `aof` 文件末尾。
 
 ### AOF持久化配置
 
-Redis使用单线程响应命令，**如果每次AOF文件命令都追加到磁盘，会极大的影响处理性能，所以Redis先写入aof缓冲区，根据用户配置的同步磁盘策略写入aof文件中**，可以通过appendfsync参数配置同步策略：含义如下
+`Redis` 使用单线程响应命令，**如果每次 `AOF` 文件命令都追加到磁盘，会极大的影响处理性能，所以 `Redis` 先写入 `aof` 缓冲区，根据用户配置的同步磁盘策略写入 `aof` 文件中**，可以通过 `appendfsync` 参数配置同步策略：含义如下
 
 ```bash
 appendonly no #是否开启AOF
 appendfilename "appendonly.aof #AOF文件名
 dir ./ #RDB文件和AOF文件所在目录
-no-appendfsync-on-rewrite no  #AOF重写期间是否禁止fsync；如果开启该选项，可以减轻文件重写时CPU
-和硬盘的负载（尤其是硬盘），但是可能会丢失
+no-appendfsync-on-rewrite no  #AOF重写期间是否禁止fsync；如果开启该选项，可以减轻文件重写时CPU和硬盘的负载（尤其是硬盘），但是可能会丢失
 appendfsync always #表示每次更新操作后手动调用fsync()将数据写入到磁盘
 appendfsync everysec #表示每秒同步一次(折中方案，默认值)
 appendfsync no  #表述等操作系统进行数据缓存同步到磁盘(快速响应客户端，不对AOF做数据同步，同步文件由操作系统负责，通常同步周期最长30S)
@@ -122,17 +122,17 @@ aof-load-truncated yes  #如果AOF文件结尾损坏，Redis启动时是否仍�
 
 ![image-20210825164200181](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-2.png)
 
-1）所有的写入命令会追加到 aof_buf（缓冲区）中。
+1）所有的写入命令会追加到 `aof_buf`（缓冲区）中。
 
-**2）AOF 缓冲区根据对应的策略向硬盘做同步操作。**
+**2）`AOF` 缓冲区根据对应的策略向硬盘做同步操作。**
 
-3）随着 AOF 文件越来越大，需要定期对 AOF 文件进行重写，达到压缩的目的。
+3）随着 `AOF` 文件越来越大，需要定期对 `AOF` 文件进行重写，达到压缩的目的。
 
-4）当 Redis 服务器重启时，可以加载 AOF 文件进行数据恢复。
+4）当 `Redis` 服务器重启时，可以加载 `AOF` 文件进行数据恢复。
 
 ### AOF重写机制
 
-AOF重写机制 随着命令的不断写入AOF，文件会越来越大，为了解决这个问题Redis引入了AOF重写机制压缩文件体积。AOF文件重写是把Redis进程内的数据转化为写命令同步到新AOF文件的过程。
+`AOF` 重写机制 随着命令的不断写入 `AOF`，文件会越来越大，为了解决这个问题 `Redis` 引入了 `AOF` 重写机制压缩文件体积。`AOF` 文件重写是把 `Redis` 进程内的数据转化为写命令同步到新 `AOF` 文件的过程。
 
 ```
 比如：
@@ -142,9 +142,9 @@ AOF 重写降低了文件占用空间，除此之外，另一个目的是：更�
 
 ### AOF触发机制
 
-手动触发：bgrewriteaof命令
+手动触发：`bgrewriteaof` 命令
 
-**自动触发：默认配置是当AOF文件大小是上次rewrite后大小的一倍且文件大于64M时触发**
+**自动触发：默认配置是当 `AOF` 文件大小是上次 `rewrite` 后大小的一倍且文件大于 `64M` 时触发**
 
 ```c
 auto-aof-rewrite-percentage 100 #表示当前AOF文件空间和上一次重写后AOF文件空间的比值(100%)
@@ -155,27 +155,27 @@ auto-aof-rewrite-min-size 64mb #代表AOF重写时文件最小体积
 
 执行步骤：
 
-1、执行AOF重写请求。如果当前进程正在执行AOF重写，请求不执行并返回如下响应：ERRBackgroundappendonlyfilerewritingalreadyinprogress；
+1、执行 `AOF` 重写请求。如果当前进程正在执行 `AOF` 重写，请求不执行并返回如下响应：`ERRBackgroundappendonlyfilerewritingalreadyinprogress`
 
-如果当前进程正在执行bgsave操作，重写命令延迟到bgsave完成之后再执行，返回如下响应：Backgroundappendonlyfilerewritingscheduled
+如果当前进程正在执行 `bgsave` 操作，重写命令延迟到 `bgsave` 完成之后再执行，返回如下响应：`Backgroundappendonlyfilerewritingscheduled`
 
-2、父进程执行fork创建子进程，开销等同于bgsave过程。
+2、父进程执行 `fork` 创建子进程，开销等同于 `bgsave` 过程。
 
-3.1、主进程fork操作完成后，继续响应其他命令。**所有修改命令依然写入AOF缓冲区并根据appendfsync策略同步到硬盘，保证原有AOF机制正确性。**
+3.1、主进程 `fork` 操作完成后，继续响应其他命令。**所有修改命令依然写入 `AOF` 缓冲区并根据 `appendfsync` 策略同步到硬盘，保证原有 `AOF` 机制正确性。**
 
-3.2、由于fork操作运用写时复制技术，子进程只能共享fork操作时的内存数据。由于父进程依然响应命令，Redis使用==**AOF重写缓冲区**==保存这部分新数据，防止新AOF文件生成期间丢失这部分数据。
+3.2、由于 `fork` 操作运用写时复制技术，子进程只能共享 `fork` 操作时的内存数据。由于父进程依然响应命令，`Redis` 使用  **`AOF` 重写缓冲区** 保存这部分新数据，防止新 `AOF` 文件生成期间丢失这部分数据。
 
-4、子进程根据内存快照，按照命令合并规则写入到新的AOF文件。每次批量写入硬盘数据量由配置aof-rewrite-incremental-fsync控制，默认为32MB，防止单次刷盘数据过多造成硬盘阻塞。
+4、子进程根据内存快照，按照命令合并规则写入到新的 `AOF` 文件。每次批量写入硬盘数据量由配置 `aof-rewrite-incremental-fsync` 控制，默认为 `32MB`，防止单次刷盘数据过多造成硬盘阻塞。
 
-5.1、新AOF文件写入完成后，子进程发送信号给父进程，父进程更新统计信息，具体见infopersistence下的aof_*相关统计。
+5.1、新 `AOF` 文件写入完成后，子进程发送信号给父进程，父进程更新统计信息，具体见 `infopersistence` 下的 `aof_*`相关统计。
 
-5.2、**父进程把AOF重写缓冲区的数据写入到新的AOF文件。**
+5.2、**父进程把 `AOF` 重写缓冲区的数据写入到新的 `AOF`文件。**
 
-5.3、**使用新AOF文件替换老文件，完成AOF重写**
+5.3、**使用新 `AOF` 文件替换老文件，完成 `AOF` 重写**
 
 ### AOF追加阻塞
 
-当开启AOF持久化时，常用的同步硬盘的策略是everysec，用于平衡性能和数据安全性。对于这种方式，Redis使用另一条线程每秒执行fsync同步硬盘。当系统硬盘资源繁忙时，会造成Redis主线程阻塞。
+当开启 `AOF` 持久化时，常用的同步硬盘的策略是 `everysec` ，用于平衡性能和数据安全性。对于这种方式，Redis使用另一条线程每秒执行fsync同步硬盘。当系统硬盘资源繁忙时，会造成Redis主线程阻塞。
 
 阻塞流程分析：
 
