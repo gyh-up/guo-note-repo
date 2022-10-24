@@ -116,6 +116,8 @@ module.exports = {
                         { text: 'leetcode-88（合并两个有序数组）', link: '/classify/leetcode/leetcode-88' },
                         { text: 'leetcode-283（移动零）', link: '/classify/leetcode/leetcode-283' },
                         { text: 'leetcode-448（找到所有数组中消失的数字）', link: '/classify/leetcode/leetcode-448' },
+                        { text: 'leetcode-21（合并两个有序链表）', link: '/classify/leetcode/leetcode-21' },
+                        { text: 'leetcode-83（删除排序链表中的重复元素）', link: '/classify/leetcode/leetcode-83' },
                         
                     ],
                 }

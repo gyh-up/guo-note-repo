@@ -20,7 +20,7 @@ n == nums.length
 
 这道题的重点是不使用额外空间且 时间复杂度为O(n)。解题思路是在原数组上，对已经出现过的值打上一个标签，因为数组取值在 `1~n`之间，而数组下标取值在 `0~(n-1)`之间，可以把当前值减去一后，得到的值对应的下标的值设置为负数，表示该值出现过。
 
-## 方法一：鸽笼法
+## *方法一：鸽笼法
 
 ```go
 func findDisappearedNumbers(nums []int) []int {
@@ -39,7 +39,7 @@ func findDisappearedNumbers(nums []int) []int {
 }
 ```
 
-## 方法二：增量法
+## *方法二：增量法
 
 ```go
 func findDisappearedNumbers(nums []int) []int {
