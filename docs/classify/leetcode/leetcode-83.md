@@ -17,7 +17,7 @@
 题目数据保证链表已经按升序排列
 ```
 
-## 方法一：
+## 方法一：循环
 
 ```go
 func deleteDuplicates(head *ListNode) *ListNode {
