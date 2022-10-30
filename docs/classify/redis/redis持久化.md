@@ -120,7 +120,7 @@ aof-load-truncated yes  #如果AOF文件结尾损坏，Redis启动时是否仍�
 
 ### AOF持久化流程
 
-![image-20210825164200181](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-2.png)
+![image-20221019184542679](/redis/redis-aof.png)
 
 1）所有的写入命令会追加到 `aof_buf`（缓冲区）中。
 
@@ -151,7 +151,7 @@ auto-aof-rewrite-percentage 100 #表示当前AOF文件空间和上一次重写�
 auto-aof-rewrite-min-size 64mb #代表AOF重写时文件最小体积
 ```
 
-![image-20210825163710636](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-3.png)
+![image-20210825163710636](/redis/redis-3.png)
 
 执行步骤：
 
@@ -218,7 +218,7 @@ aof-use-rdb-preamble yes
 
 ## 重新加载的选择
 
-![image-20210825163510441](C:/Users/Administrator/Desktop/learn/PDF/public/images/redis-24.png)
+![image-20210825163510441](/redis/redis-24.png)
 
 ## 持久化的选择
 
