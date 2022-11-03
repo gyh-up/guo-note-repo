@@ -38,24 +38,23 @@ func deleteDuplicates(head *ListNode) *ListNode {
 
 
 
-## 方法二：哈希表
+## 方法二：递归
 
-用一个哈希表来保存已经出现过的值和对应下表，可以将寻找 `target - number` 的时间复杂度降低到从 O(N) 降低到 O(1)。
+每次比较后链表都缩短了，符合递归的定义
 
 时间复杂度：O(N)
 
 ```go
-func twoSum(nums []int, target int) []int {
-	var numberMap = make(map[int]int)
-	for i, number := range nums {
-		diff := target - number
-		if j, ok := numberMap[diff]; ok {
-			return []int{j, i}
-		} else {
-			numberMap[number] = i
-		}
-	}
-	return []int{}
+func deleteDuplicates(head *ListNode) *ListNode {
+    if head == nil || head.Next == nil {
+        return head
+    }
+    head.Next = deleteDuplicates(head.Next)
+    if head.Val == head.Next.Val {
+        return head.Next
+    } else {
+        return head 
+    }
 }
 ```
 

@@ -57,6 +57,7 @@ module.exports = {
                     {
                         items: [
                             { text: "Leetcode", link: "/classify/leetcode/" },
+                            { text: "算法", link: "/classify/算法/" },
                         ],
                     }
                 ],
