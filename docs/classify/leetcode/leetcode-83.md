@@ -38,7 +38,7 @@ func deleteDuplicates(head *ListNode) *ListNode {
 
 
 
-## 方法二：递归
+## *方法二：递归
 
 每次比较后链表都缩短了，符合递归的定义
 
@@ -57,5 +57,3 @@ func deleteDuplicates(head *ListNode) *ListNode {
     }
 }
 ```
-
- 注：一开始觉得可以先排序，用双指针来解决，但是如果做了排序，那下标也就变化了，跟题目要求不符。

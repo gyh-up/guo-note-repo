@@ -78,49 +78,28 @@ module.exports = {
                     collapsible: true,
                     //  默认情况下，所有侧边栏都是展开的, 始页面加载时关闭
                     collapsed: true,
-                    items: [
-                        { text: '一、介绍', link: '/classify/redis/redis介绍' },
-                        { text: '二、数据类型简介', link: '/classify/redis/redis数据类型简介' },
-                        { text: '三、底层数据结构', link: '/classify/redis/redis底层数据结构' },
-                        { text: '四、五大数据类型实现原理', link: '/classify/redis/redis五大数据类型实现原理' },
-                        { text: '五、redis内存淘汰策略', link: '/classify/redis/redis内存淘汰策略' },
-                        { text: '六、redis内存回收', link: '/classify/redis/redis内存回收' },
-                        { text: '七、redis内存碎片率', link: '/classify/redis/redis内存碎片率' },
-                        { text: '八、redis缓存击穿、穿透、雪崩', link: '/classify/redis/redis缓存击穿、穿透、雪崩' },
-                        { text: '九、redis慢查询和管道', link: '/classify/redis/redis慢查询和管道' },
-                        { text: '十、redis持久化', link: '/classify/redis/redis持久化' },
-                        { text: '十一、redis事务', link: '/classify/redis/redis事务' },
-                        { text: '十二、redis分布式锁', link: '/classify/redis/redis分布式锁' },
-                        { text: '十三、redis主从', link: '/classify/redis/redis主从' },
-                        { text: '十四、redis哨兵', link: '/classify/redis/redis哨兵' },
-                        { text: '十五、redis集群', link: '/classify/redis/redis集群' },
-                    ],
+                    items: sidebar_of_redis(),
                 }
             ],
             '/classify/计算机基础/计算机网络/': [
                 {
                     text: '计算机网络学习笔记',
                     collapsible: true,
-                    items: [
-                        { text: '一、IO模型', link: '/classify/计算机基础/计算机网络/IO模型' },
-                    ],
+                    items: sidebar_of_computerNet(),
                 }
             ],
             '/classify/leetcode/': [
                 {
                     text: 'Leetcode',
                     collapsible: true,
-                    items: [
-                        { text: '前言', link: '/classify/leetcode/' },
-                        { text: 'leetcode-70（爬楼梯）', link: '/classify/leetcode/leetcode-70' },
-                        { text: 'leetcode-1（两数之和）', link: '/classify/leetcode/leetcode-1' },
-                        { text: 'leetcode-88（合并两个有序数组）', link: '/classify/leetcode/leetcode-88' },
-                        { text: 'leetcode-283（移动零）', link: '/classify/leetcode/leetcode-283' },
-                        { text: 'leetcode-448（找到所有数组中消失的数字）', link: '/classify/leetcode/leetcode-448' },
-                        { text: 'leetcode-21（合并两个有序链表）', link: '/classify/leetcode/leetcode-21' },
-                        { text: 'leetcode-83（删除排序链表中的重复元素）', link: '/classify/leetcode/leetcode-83' },
-                        
-                    ],
+                    items: sidebar_of_leetcode(),
+                }
+            ],
+            '/classify/算法/': [
+                {
+                    text: '算法',
+                    collapsible: true,
+                    items: sidebar_of_algorithm(),
                 }
             ]
             // '/classify/redis/': [
@@ -135,4 +114,50 @@ module.exports = {
             // ]
         }
     }
+}
+
+function sidebar_of_leetcode() {
+    return [
+        { text: '前言', link: '/classify/leetcode/' },
+        { text: 'leetcode-70（爬楼梯）', link: '/classify/leetcode/leetcode-70' },
+        { text: 'leetcode-1（两数之和）', link: '/classify/leetcode/leetcode-1' },
+        { text: 'leetcode-88（合并两个有序数组）', link: '/classify/leetcode/leetcode-88' },
+        { text: 'leetcode-283（移动零）', link: '/classify/leetcode/leetcode-283' },
+        { text: 'leetcode-448（找到所有数组中消失的数字）', link: '/classify/leetcode/leetcode-448' },
+        { text: 'leetcode-21（合并两个有序链表）', link: '/classify/leetcode/leetcode-21' },
+        { text: 'leetcode-83（删除排序链表中的重复元素）', link: '/classify/leetcode/leetcode-83' },
+    ];
+}
+
+function sidebar_of_redis() {
+    return [
+        { text: '一、介绍', link: '/classify/redis/redis介绍' },
+        { text: '二、数据类型简介', link: '/classify/redis/redis数据类型简介' },
+        { text: '三、底层数据结构', link: '/classify/redis/redis底层数据结构' },
+        { text: '四、五大数据类型实现原理', link: '/classify/redis/redis五大数据类型实现原理' },
+        { text: '五、redis内存淘汰策略', link: '/classify/redis/redis内存淘汰策略' },
+        { text: '六、redis内存回收', link: '/classify/redis/redis内存回收' },
+        { text: '七、redis内存碎片率', link: '/classify/redis/redis内存碎片率' },
+        { text: '八、redis缓存击穿、穿透、雪崩', link: '/classify/redis/redis缓存击穿、穿透、雪崩' },
+        { text: '九、redis慢查询和管道', link: '/classify/redis/redis慢查询和管道' },
+        { text: '十、redis持久化', link: '/classify/redis/redis持久化' },
+        { text: '十一、redis事务', link: '/classify/redis/redis事务' },
+        { text: '十二、redis分布式锁', link: '/classify/redis/redis分布式锁' },
+        { text: '十三、redis主从', link: '/classify/redis/redis主从' },
+        { text: '十四、redis哨兵', link: '/classify/redis/redis哨兵' },
+        { text: '十五、redis集群', link: '/classify/redis/redis集群' },
+    ];
+}
+
+function sidebar_of_computerNet() {
+    return [
+        { text: '一、IO模型', link: '/classify/计算机基础/计算机网络/IO模型' },
+    ];
+    
+}
+
+function sidebar_of_algorithm() {
+    return [
+        { text: '一、递归算法', link: '/classify/算法/递归算法' },
+    ];
 }
