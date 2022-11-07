@@ -52,15 +52,7 @@ module.exports = {
                 ],
             },
             {
-                text: "算法",
-                items: [
-                    {
-                        items: [
-                            { text: "Leetcode", link: "/classify/leetcode/" },
-                            { text: "算法", link: "/classify/算法/" },
-                        ],
-                    }
-                ],
+                text: "算法", link: "/classify/algorithm/"
             }
         ],
         // 外链
@@ -74,10 +66,8 @@ module.exports = {
             '/classify/redis/': [
                 {
                     text: 'Redis 学习笔记',
-                    //  侧边栏折叠
-                    collapsible: true,
-                    //  默认情况下，所有侧边栏都是展开的, 始页面加载时关闭
-                    collapsed: true,
+                    collapsible: true,  //  侧边栏折叠
+                    collapsed: true,    //  默认情况下，所有侧边栏都是展开的, 始页面加载时关闭
                     items: sidebar_of_redis(),
                 }
             ],
@@ -88,30 +78,6 @@ module.exports = {
                     items: sidebar_of_computerNet(),
                 }
             ],
-            '/classify/leetcode/': [
-                {
-                    text: 'Leetcode',
-                    collapsible: true,
-                    items: sidebar_of_leetcode(),
-                }
-            ],
-            '/classify/算法/': [
-                {
-                    text: '算法',
-                    collapsible: true,
-                    items: sidebar_of_algorithm(),
-                }
-            ]
-            // '/classify/redis/': [
-            //     {
-            //         text: 'Redis',
-            //         collapsible: true,
-            //         collapsed: true,
-            //         items: [
-            //             { text: 'redis学习笔记1-介绍', link: '/classify/redis/redis介绍' },
-            //         ],
-            //     }
-            // ]
         }
     }
 }
@@ -119,13 +85,6 @@ module.exports = {
 function sidebar_of_leetcode() {
     return [
         { text: '前言', link: '/classify/leetcode/' },
-        { text: 'leetcode-70（爬楼梯）', link: '/classify/leetcode/leetcode-70' },
-        { text: 'leetcode-1（两数之和）', link: '/classify/leetcode/leetcode-1' },
-        { text: 'leetcode-88（合并两个有序数组）', link: '/classify/leetcode/leetcode-88' },
-        { text: 'leetcode-283（移动零）', link: '/classify/leetcode/leetcode-283' },
-        { text: 'leetcode-448（找到所有数组中消失的数字）', link: '/classify/leetcode/leetcode-448' },
-        { text: 'leetcode-21（合并两个有序链表）', link: '/classify/leetcode/leetcode-21' },
-        { text: 'leetcode-83（删除排序链表中的重复元素）', link: '/classify/leetcode/leetcode-83' },
     ];
 }
 
@@ -154,10 +113,4 @@ function sidebar_of_computerNet() {
         { text: '一、IO模型', link: '/classify/计算机基础/计算机网络/IO模型' },
     ];
     
-}
-
-function sidebar_of_algorithm() {
-    return [
-        { text: '一、递归算法', link: '/classify/算法/递归算法' },
-    ];
 }

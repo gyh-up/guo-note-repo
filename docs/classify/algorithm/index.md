@@ -1,0 +1,26 @@
+# 算法
+
+## 题目来源
+
+Leetcode：https://leetcode.cn/。
+
+## 标签 
+
+### 1、算法
+
+[递归](/classify/algorithm/算法-递归)	|	[动态规划](/classify/algorithm/算法-动态规划)	|	
+
+### 2、基础数据结构
+
+[哈希表](/classify/algorithm/基础数据结构-哈希表)	|	
+
+### 3、高级数据结构
+
+### 4、技巧
+
+[双指针](/classify/algorithm/技巧-双指针)	|	
+
+### 5、数学
+
+[斐波那契数列](/classify/algorithm/数学-斐波那契数列)	|	
+
