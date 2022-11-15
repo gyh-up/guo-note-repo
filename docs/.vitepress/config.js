@@ -78,15 +78,17 @@ module.exports = {
                     items: sidebar_of_computerNet(),
                 }
             ],
+            '/classify/algorithm/': [
+                {
+                    text: '算法题',
+                    collapsible: true,
+                    items: sidebar_of_algorithm_title(),
+                }
+            ],
         }
     }
 }
 
-function sidebar_of_leetcode() {
-    return [
-        { text: '前言', link: '/classify/leetcode/' },
-    ];
-}
 
 function sidebar_of_redis() {
     return [
@@ -113,4 +115,21 @@ function sidebar_of_computerNet() {
         { text: '一、IO模型', link: '/classify/计算机基础/计算机网络/IO模型' },
     ];
     
+}
+
+function sidebar_of_algorithm_title() {
+    return [
+        { text: 'leetcode-70（爬楼梯）', link: '/classify/algorithm/title/leetcode-70' },
+        { text: 'leetcode-1（两数之和）', link: '/classify/algorithm/title/leetcode-1' },
+        { text: 'leetcode-88（合并两个有序数组）', link: '/classify/algorithm/title/leetcode-88' },
+        { text: 'leetcode-283（移动零）', link: '/classify/algorithm/title/leetcode-283' },
+        { text: 'leetcode-448（找到所有数组中消失的数字）', link: '/classify/algorithm/title/leetcode-448' },
+        { text: 'leetcode-21（合并两个有序链表）', link: '/classify/algorithm/title/leetcode-21' },
+        { text: 'leetcode-83（删除排序链表中的重复元素）', link: '/classify/algorithm/title/leetcode-83' },
+        { text: 'leetcode-141（环形链表）', link: '/classify/algorithm/title/leetcode-141' },
+        { text: 'leetcode-142（环形链表II）', link: '/classify/algorithm/title/leetcode-142' },
+        { text: 'leetcode-160（相交链表）', link: '/classify/algorithm/title/leetcode-160' },
+        { text: 'leetcode-206（反转链表）', link: '/classify/algorithm/title/leetcode-206' },
+        { text: 'leetcode-234（回文链表）', link: '/classify/algorithm/title/leetcode-234' },
+    ];
 }
