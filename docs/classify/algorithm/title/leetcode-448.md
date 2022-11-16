@@ -1,6 +1,6 @@
 # 问题：找到所有数组中消失的数字
 
-[哈希表](/classify/algorithm/基础数据结构-哈希表)
+[哈希表](/classify/algorithm/基础数据结构-哈希表)  | [数组](/classify/algorithm/基础数据结构-数组)
 
 给你一个含 n 个整数的数组 nums ，其中 nums[i] 在区间 [1, n] 内。请你找出所有在 [1, n] 范围内但没有出现在 nums 中的数字，并以数组的形式返回结果。
 

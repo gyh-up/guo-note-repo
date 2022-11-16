@@ -1,6 +1,6 @@
 # 问题：合并两个有序数组
 
-[双指针](/classify/algorithm/技巧-双指针) | [排序](/classify/algorithm/基础-排序)
+[双指针](/classify/algorithm/技巧-双指针) | [排序](/classify/algorithm/基础-排序) | [数组](/classify/algorithm/基础数据结构-数组)
 
 给你两个按 非递减顺序 排列的整数数组 nums1 和 nums2，另有两个整数 m 和 n ，分别表示 nums1 和 nums2 中的元素数目。
 
