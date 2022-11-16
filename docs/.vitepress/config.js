@@ -131,5 +131,7 @@ function sidebar_of_algorithm_title() {
         { text: 'leetcode-160（相交链表）', link: '/classify/algorithm/title/leetcode-160' },
         { text: 'leetcode-206（反转链表）', link: '/classify/algorithm/title/leetcode-206' },
         { text: 'leetcode-234（回文链表）', link: '/classify/algorithm/title/leetcode-234' },
+        { text: 'leetcode-876（链表的中间节点）', link: '/classify/algorithm/title/leetcode-876' },
+        { text: '剑指Offer-22（链表中倒数第K个节点）', link: '/classify/algorithm/title/剑指Offer-22' },
     ];
 }

@@ -12,7 +12,7 @@ Leetcode：https://leetcode.cn/。
 
 ### 2、基础数据结构
 
-[哈希表](/classify/algorithm/基础数据结构-哈希表) | [链表](/classify/algorithm/基础数据结构-链表) | [栈](/classify/algorithm/基础数据结构-栈) 
+[哈希表](/classify/algorithm/基础数据结构-哈希表) | [链表](/classify/algorithm/基础数据结构-链表) | [栈](/classify/algorithm/基础数据结构-栈)  | [队列](/classify/algorithm/基础数据结构-队列) 
 
 ### 3、高级数据结构
 
@@ -27,4 +27,8 @@ Leetcode：https://leetcode.cn/。
 ### 6、基础
 
 [排序](/classify/algorithm/基础-排序)
+
+### 7、其他
+
+[设计](/classify/algorithm/其他-设计)
 
