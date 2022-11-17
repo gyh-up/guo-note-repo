@@ -48,25 +48,19 @@ func decodeString(s string) string {
     stack := make([]string, 0)
     // 字符串索引
     i := 0
-    // 保存数字
-    var num string
     for i < len(s) {
         cur := s[i]
         switch {
         // 0-9，拼接，且判断是否需要入栈
         case cur >= '0' && cur <= '9' :
-            // 拼接
-            num += string(cur)
-            i++
-            // 如果下一个不是 0-9，则入栈，num 置为空
-            if !(s[i] >= '0' && s[i] <= '9') {
-                stack = append(stack, num)
-                num = ""
-            }
+            // 获取完整数字
+            num := getDigits(s, &i)
+            // 数字入栈
+            stack = append(stack, num)
         // a-z,A-Z,[ 直接入栈
         case (cur >= 'a' && cur <= 'z') || (cur >= 'a' && cur <= 'z') || cur == '[' :
             stack = append(stack, string(cur))
-            i+
+            i++
         // ]，出栈
         case cur == ']' :
             var t string
@@ -94,6 +88,15 @@ func decodeString(s string) string {
     }
     return ret
 }
+
+// 获取完整数字
+func getDigits(s string, i *int) string {
+    ret := ""
+    for ; s[*i] >= '0' && s[*i] <= '9'; *i++ {
+        ret += string(s[*i])
+    }
+    return ret
+}
 ```
 
 ## 方法二：递归
@@ -101,15 +104,52 @@ func decodeString(s string) string {
 很容易联想到递归算法，每次都将分解成更小的加密字符串进行处理。
 
 ```go
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-func hasCycle(head *ListNode) bool {
-   
-} 
+var (
+    src string
+    i int
+)
+
+func decodeString(s string) string {
+    src = s
+    i = 0
+    return getString()
+}
+
+func getString () string {
+    if i == len(src) || src[i] == ']' {
+        return ""
+    }
+	// 默认 1 次
+    repTime := 1
+    cur := src[i]
+    ret := ""
+    switch {
+        case cur >= '0' && cur <= '9':
+        // 获取完整数字
+        repTime = getDigits()
+        // 跳过 ”[“
+        i++
+        // 获取完整字母
+        str := getString()
+        // 重复 repTime 次
+        ret = strings.Repeat(str, repTime)
+        // 跳过 "]"
+        i++
+        case (cur >= 'a' && cur <= 'z') || (cur >= 'A' && cur <= 'Z'):
+        // 直接返回
+        ret = string(cur)
+        i++
+    }
+    return ret + getString()
+}
+
+func getDigits() int {
+    ret := ""
+    for ; src[i] >= '0' && src[i] <= '9'; i++ {
+        ret += string(src[i])
+    }
+    time, _ := strconv.Atoi(ret)
+    return time
+}
 ```
 
