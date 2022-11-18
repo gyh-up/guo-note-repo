@@ -1,6 +1,6 @@
 # 问题：爬楼梯
 
-[递归](/classify/algorithm/算法-递归) | [动态规划](/classify/algorithm/算法-动态规划) | [斐波那契数列](/classify/algorithm/数学-斐波那契数列)	
+[递归](/classify/algorithm/算法-递归) | [动态规划](/classify/algorithm/算法-动态规划) | [斐波那契数列](/classify/algorithm/数学-斐波那契数列) | [迭代](/classify/algorithm/算法-迭代)
 
 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
@@ -33,7 +33,7 @@
 
 根据 `f(n) = f(n-1) + f(n-2)`，也就是斐波那契数列。
 
-定义一个 `map`表来记录已经计算出来的 `f(n)` 对应的值，减少算法的计算量，减低复杂度
+定义一个 `map`表来记录已经计算出来的 `f(n)` 对应的值，减少算法的计算量，减低复杂度，解决递归算法的超时问题
 
 时间复杂度：`O(n)`
 
@@ -74,6 +74,22 @@ func climbStairs(n int) int {
 		c = a + b
 	}
 	return c
+}
+```
+
+## 方法三：迭代
+
+```go
+func climbStairs(n int) int {
+    fbMap := make(map[int]int)
+    fbMap[1] = 1
+    fbMap[2] = 2
+
+    for i := 3; i <= n; i++ {
+        fbMap[i] = fbMap[i-1] + fbMap[i-2]
+    } 
+
+    return fbMap[n]
 }
 ```
 

@@ -2,17 +2,21 @@
 
 ## 题目来源
 
-Leetcode：https://leetcode.cn/。
+Leetcode：https://leetcode.cn/
+
+## 学习参考
+
+[B站图灵学院教程，华为算法大佬耗时200小时录制]([华为算法大佬耗时200小时录制：Leetcode刷题100道，足以吊打字节面试官！_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1eg411w7gn/))
 
 ## 标签 
 
 ### 1、算法
 
-[递归](/classify/algorithm/算法-递归) | [动态规划](/classify/algorithm/算法-动态规划) | [迭代](/classify/algorithm/算法-迭代)
+[递归](/classify/algorithm/算法-递归) | [动态规划](/classify/algorithm/算法-动态规划) | [迭代](/classify/algorithm/算法-迭代) | [深度优先搜索](/classify/algorithm/算法-深度优先搜索)
 
 ### 2、基础数据结构
 
-[哈希表](/classify/algorithm/基础数据结构-哈希表) | [链表](/classify/algorithm/基础数据结构-链表) | [栈](/classify/algorithm/基础数据结构-栈)  | [队列](/classify/algorithm/基础数据结构-队列)  | [字符串](/classify/algorithm/基础数据结构-字符串) | [数组](/classify/algorithm/基础数据结构-数组)
+[哈希表](/classify/algorithm/基础数据结构-哈希表) | [链表](/classify/algorithm/基础数据结构-链表) | [栈](/classify/algorithm/基础数据结构-栈)  | [队列](/classify/algorithm/基础数据结构-队列)  | [字符串](/classify/algorithm/基础数据结构-字符串) | [数组](/classify/algorithm/基础数据结构-数组) | [树](/classify/algorithm/基础数据结构-树)
 
 ### 3、高级数据结构
 
