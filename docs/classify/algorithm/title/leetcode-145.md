@@ -1,8 +1,8 @@
-# 问题：二叉树的中序遍历
+# 问题：二叉树的后序遍历
 
 [树](/classify/algorithm/基础数据结构-树) | [栈](/classify/algorithm/基础数据结构-栈) | [递归](/classify/algorithm/算法-递归) |  [迭代](/classify/algorithm/算法-迭代) | [深度优化搜索](/classify/algorithm/算法-深度优化搜索) | [哈希表](/classify/algorithm/基础数据结构-哈希表)
 
-给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
+给你二叉树的根节点 `root` ，返回它节点值的 **前序** 遍历。
 
  **示例 1：**
 
@@ -10,7 +10,7 @@
 
 ```
 输入：root = [1,null,2,3]
-输出：[1,3,2]
+输出：[3,2,1]
 ```
 
 **示例 2：**
@@ -43,22 +43,22 @@
  *     Right *TreeNode
  * }
  */
-func inorderTraversal(root *TreeNode) []int {
-    var inorder func(node *TreeNode)
-    var result []int
-	inorder = func(node *TreeNode) {
-        if node == nil {
-			return
-		}
+func postorderTraversal(root *TreeNode) []int {
+    var ret []int
+    var postorder func(root *TreeNode)
+    postorder = func(root *TreeNode) {
+        if root == nil {
+            return
+        }
         // 递归左子树节点
-        inorder(node.Left)
-        // 当前节点值 返回切片中
-        result = append(result, node.Val)
+        postorder(root.Left)
         // 递归右子树节点
-        inorder(node.Right)
-	}
-	inorder(root)
-    return result
+        postorder(root.Right)
+        // 当前节点值 返回切片中
+        ret = append(ret, root.Val)
+    }
+    postorder(root)
+    return ret
 }
 ```
 
@@ -73,27 +73,32 @@ func inorderTraversal(root *TreeNode) []int {
  *     Right *TreeNode
  * }
  */
-func inorderTraversal(root *TreeNode) []int {
-    // 创建栈
-	var stack []*TreeNode
+func postorderTraversal(root *TreeNode) []int {
     // 创建切片保存结点的值
     var ret []int
+    // 创建栈
+    var stack []*TreeNode
+    // 创建指针保存上次入队的结点
+    var preAccess *TreeNode
+
     for root != nil || len(stack) > 0 {
-        // 1、如果存在左子树，则当前节点入栈，迭代左子树；
-        // 2.1、如果不存在左子树，则出栈取出节点，当前节点值 返回切片中
-        // 2.2 如果当前节点存在右子树，迭代右子树；
         if root != nil {
             stack = append(stack, root)
             root = root.Left
         } else {
-            root = stack[len(stack)-1]
+            node := stack[len(stack) - 1]
             stack = stack[:len(stack)-1]
-            ret = append(ret, root.Val)
-            root = root.Right
+            if node.Right != nil && preAccess != node.Right{
+                root = node.Right
+                stack = append(stack, node)
+            } else {
+                ret = append(ret, node.Val)
+                preAccess = node
+            }
         }
     }
     return ret
-}
+}   
 ```
 
 ## 方法三：标记法/ 哈希表
@@ -109,7 +114,7 @@ func inorderTraversal(root *TreeNode) []int {
  *     Right *TreeNode
  * }
  */
-func inorderTraversal(root *TreeNode) []int {
+func postorderTraversal(root *TreeNode) []int {
     var ret []int
     var stack []*TreeNode
 	// 哈希表用来保存当前节点的状态，是否已经经过；经过则不再做入栈操作
@@ -125,7 +130,7 @@ func inorderTraversal(root *TreeNode) []int {
         }
         if nodeAccess[node] == 0 {
             nodeAccess[node] = 1
-            stack = append(stack, node.Right, node, node.Left)
+            stack = append(stack, node, node.Right, node.Left)
         } else {
             ret = append(ret, node.Val)
         }
@@ -133,4 +138,6 @@ func inorderTraversal(root *TreeNode) []int {
     return ret
 }
 ```
+
+
 

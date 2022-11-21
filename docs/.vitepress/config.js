@@ -134,5 +134,8 @@ function sidebar_of_algorithm_title() {
         { text: 'leetcode-876（链表的中间节点）', link: '/classify/algorithm/title/leetcode-876' },
         { text: '剑指Offer-22（链表中倒数第K个节点）', link: '/classify/algorithm/title/剑指Offer-22' },
         { text: 'leetcode-394（字符串解码）', link: '/classify/algorithm/title/leetcode-394' },
+        { text: 'leetcode-94（二叉树的中序遍历）', link: '/classify/algorithm/title/leetcode-94' },
+        { text: 'leetcode-144（二叉树的前序遍历）', link: '/classify/algorithm/title/leetcode-144' },
+        { text: 'leetcode-145（二叉树的后序遍历）', link: '/classify/algorithm/title/leetcode-145' },
     ];
 }
