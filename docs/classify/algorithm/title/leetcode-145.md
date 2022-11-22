@@ -1,6 +1,6 @@
 # 问题：二叉树的后序遍历
 
-[树](/classify/algorithm/基础数据结构-树) | [栈](/classify/algorithm/基础数据结构-栈) | [递归](/classify/algorithm/算法-递归) |  [迭代](/classify/algorithm/算法-迭代) | [深度优化搜索](/classify/algorithm/算法-深度优化搜索) | [哈希表](/classify/algorithm/基础数据结构-哈希表)
+[树](/classify/algorithm/基础数据结构-树) | [栈](/classify/algorithm/基础数据结构-栈) | [递归](/classify/algorithm/算法-递归) |  [迭代](/classify/algorithm/算法-迭代) | [深度优先搜索](/classify/algorithm/算法-深度优先搜索) | [哈希表](/classify/algorithm/基础数据结构-哈希表)
 
 给你二叉树的根节点 `root` ，返回它节点值的 **前序** 遍历。
 

@@ -137,5 +137,7 @@ function sidebar_of_algorithm_title() {
         { text: 'leetcode-94（二叉树的中序遍历）', link: '/classify/algorithm/title/leetcode-94' },
         { text: 'leetcode-144（二叉树的前序遍历）', link: '/classify/algorithm/title/leetcode-144' },
         { text: 'leetcode-145（二叉树的后序遍历）', link: '/classify/algorithm/title/leetcode-145' },
+        { text: 'leetcode-101（对称二叉树）', link: '/classify/algorithm/title/leetcode-101' },
+        { text: 'leetcode-104（二叉树的最大深度）', link: '/classify/algorithm/title/leetcode-104' },
     ];
 }

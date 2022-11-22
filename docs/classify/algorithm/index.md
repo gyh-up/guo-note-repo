@@ -2,7 +2,7 @@
 
 ## 题目来源
 
-Leetcode：https://leetcode.cn/
+[Leetcode](https://leetcode.cn/)
 
 ## 学习参考
 
@@ -12,7 +12,7 @@ Leetcode：https://leetcode.cn/
 
 ### 1、算法
 
-[递归](/classify/algorithm/算法-递归) | [动态规划](/classify/algorithm/算法-动态规划) | [迭代](/classify/algorithm/算法-迭代) | [深度优先搜索](/classify/algorithm/算法-深度优先搜索)
+[递归](/classify/algorithm/算法-递归) | [动态规划](/classify/algorithm/算法-动态规划) | [迭代](/classify/algorithm/算法-迭代) | [深度优先搜索](/classify/algorithm/算法-深度优先搜索) | [广度优先搜索](/classify/algorithm/算法-广度优先搜索)
 
 ### 2、基础数据结构
 
