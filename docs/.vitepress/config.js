@@ -119,6 +119,7 @@ function sidebar_of_computerNet() {
 
 function sidebar_of_algorithm_title() {
     return [
+        { text: '算法大纲', link: '/classify/algorithm/' },
         { text: 'leetcode-70（爬楼梯）', link: '/classify/algorithm/title/leetcode-70' },
         { text: 'leetcode-1（两数之和）', link: '/classify/algorithm/title/leetcode-1' },
         { text: 'leetcode-88（合并两个有序数组）', link: '/classify/algorithm/title/leetcode-88' },
