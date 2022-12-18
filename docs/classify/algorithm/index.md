@@ -10,9 +10,7 @@
 
 ## 相关概念学习
 
-[时间复杂度和空间复杂度](/classify/algorithm/concept/复杂度-时间复杂度和空间复杂度) | [数据结构-树](/classify/algorithm/concept/数据结构-树) | [数据结构-栈与队列](/classify/algorithm/concept/数据结构-栈与队列) | [算法-查找算法](/classify/algorithm/concept/算法-查找算法) | [算法-排序算法](/classify/algorithm/concept/算法-排序算法) | [算法-深度优先搜索和广度优先搜索](/classify/algorithm/concept/算法-深度优先搜索和广度优先搜索)
-
-## 标签分类
+[时间复杂度和空间复杂度](/classify/algorithm/concept/复杂度-时间复杂度和空间复杂度) | [数据结构-树](/classify/algorithm/concept/数据结构-树) | [数据结构-堆](/classify/algorithm/concept/数据结构-堆) | [数据结构-栈与队列](/classify/algorithm/concept/数据结构-栈与队列) | [算法-查找算法](/classify/algorithm/concept/算法-查找算法) | [算法-排序算法](/classify/algorithm/concept/算法-排序算法) | [算法-深度优先搜索和广度优先搜索](/classify/algorithm/concept/算法-深度优先搜索和广度优先搜索)
 
 ## 标签分类
 
