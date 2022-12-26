@@ -102,11 +102,11 @@ function sidebar_of_redis() {
         { text: '八、redis缓存击穿、穿透、雪崩', link: '/classify/redis/redis缓存击穿、穿透、雪崩' },
         { text: '九、redis慢查询和管道', link: '/classify/redis/redis慢查询和管道' },
         { text: '十、redis持久化', link: '/classify/redis/redis持久化' },
-        { text: '十一、redis事务', link: '/classify/redis/redis事务' },
-        { text: '十二、redis分布式锁', link: '/classify/redis/redis分布式锁' },
-        { text: '十三、redis主从', link: '/classify/redis/redis主从' },
-        { text: '十四、redis哨兵', link: '/classify/redis/redis哨兵' },
-        { text: '十五、redis集群', link: '/classify/redis/redis集群' },
+        // { text: '十一、redis事务', link: '/classify/redis/redis事务' },
+        // { text: '十二、redis分布式锁', link: '/classify/redis/redis分布式锁' },
+        // { text: '十三、redis主从', link: '/classify/redis/redis主从' },
+        // { text: '十四、redis哨兵', link: '/classify/redis/redis哨兵' },
+        // { text: '十五、redis集群', link: '/classify/redis/redis集群' },
     ];
 }
 
@@ -142,5 +142,6 @@ function sidebar_of_algorithm_title() {
         { text: 'leetcode-104（二叉树的最大深度）', link: '/classify/algorithm/title/leetcode-104' },
         { text: 'leetcode-110（平衡二叉树）', link: '/classify/algorithm/title/leetcode-110' },
         { text: 'leetcode-226（翻转二叉树）', link: '/classify/algorithm/title/leetcode-226' },
+        { text: 'leetcode-912（排序数组）', link: '/classify/algorithm/title/leetcode-912' },
     ];
 }
