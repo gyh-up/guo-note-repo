@@ -18,7 +18,11 @@
 输出：[0,0,1,1,2,5]
 ```
 
+
+
 使用十大经典排序算法实现，有些因为时间复杂度导致超出时间限制，不过纯粹为了实现一下算法逻辑。[点击查看排序算法介绍](/classify/algorithm/concept/算法-排序算法)。
+
+前三种算法在 leetcode 中均超出时间限制，可以说明性能不佳
 
 ## 方法一：冒泡排序
 
@@ -108,7 +112,7 @@ func sortArray(nums []int) []int {
         for i := tag; i < len(nums); i++ {
             // 保存当前值，因为后续的元素后退会覆盖该值
             tmp := nums[i]
-            // 确定分组上一个值的位置，用当前下标减去增量值
+            // 确定分组上一个值的位置，用当前下标减去增量值，实际逻辑跟插入排序一样
             j := i - tag
             for j >= 0 {
                 if nums[j] > tmp {
@@ -126,3 +130,161 @@ func sortArray(nums []int) []int {
 ```
 
 ## 方法五：归并排序
+
+```go
+func sortArray(nums []int) []int {
+    var merge func(left []int, right []int) []int
+    merge = func (left []int, right []int) []int {
+        // 左区归并
+        if len(left) > 1 {
+            left = merge(left[:len(left)/2], left[len(left)/2:])
+        }
+        // 右区归并
+        if len(right) > 1 {
+            right = merge(right[:len(right)/2], right[len(right)/2:])
+        }
+		
+        // 初始化左右区下标
+        l, r := 0, 0
+        // 临时存储切片
+        tmp := make([]int, len(left) + len(right))
+        // 归并的逻辑，依次比较左右区的第一个为排序元素
+        for l < len(left) && r < len(right) {
+            if left[l] < right[r] {
+                tmp[l+r] = left[l]
+                l++
+            } else {
+                tmp[l+r] = right[r]
+                r++
+            }
+        }
+        // 其中一个区的元素排序完成，另一区剩余元素直接追加
+        if l < len(left) {
+            tmp = append(tmp[:l+r], left[l:]...)
+        }
+        if r < len(right) {
+            tmp = append(tmp[:l+r], right[r:]...)
+        }
+        return tmp
+    }
+
+    return merge(nums[:len(nums)/2], nums[len(nums)/2:])
+}
+```
+
+## 方法六：快速排序
+
+```go
+func sortArray(nums []int) []int {
+	var quick func(left, right int) []int
+	quick = func(left, right int) []int {
+		// 递归终止条件
+		if left > right {
+			return nil
+		}
+		// 左右指针及主元
+		i, j, pivot := left, right, nums[right]
+		for i < j {
+            // 寻找大于主元的左边元素
+			for i < j && nums[i] <= pivot {
+				i++
+			}
+			// 寻找小于主元的右边元素
+			for i < j && nums[j] >= pivot {
+				j--
+			}
+			// 交换i/j下标元素
+			nums[i], nums[j] = nums[j], nums[i]
+		}
+		// 交换元素
+		nums[i], nums[right] = nums[right], nums[i]
+		quick(left, i-1)
+		quick(i+1, right)
+		return nums
+	}
+	return quick(0, len(nums)-1)
+}
+```
+
+## 方法七：堆排序
+
+```go
+// 创建最大堆，然后将堆顶元素与最后一个未排序元素交换位置，当前未排序元素中的最大元素就后置
+// 缩小堆（去除上一步骤排序好的元素）继续调整堆
+func sortArray(nums []int) []int {
+    n := len(nums)
+	var heapify func(root, end int)
+    heapify = func(root, end int){
+        left_child := root * 2 + 1
+        right_child := root * 2 + 2
+        largest := root 
+        if left_child <= end && nums[left_child] > nums[largest] {
+            largest = left_child
+        }
+        if right_child <= end && nums[right_child] > nums[largest] {
+            largest = right_child
+        }
+        if root != largest {
+            nums[root], nums[largest] = nums[largest], nums[root]
+            heapify(largest, end)
+        }
+
+    }
+
+    // 初始化最大堆
+    for i := n/2 - 1; i >= 0; i--{
+        heapify(i, n - 1)
+    }
+
+	// 依次弹出元素，然后再堆化，相当于依次把最大值放入尾部
+	for i := n - 1; i > 0; i--{
+        nums[0], nums[i] = nums[i], nums[0]
+        heapify(0, i - 1)
+    }
+    return nums 
+}
+
+```
+
+方法八：计数排序
+
+```go
+func sortArray(nums []int) []int {
+    if len(nums) == 0 {
+		return nums
+	}
+    var getMinMax func(nums []int) (min int, max int)
+    getMinMax = func(nums []int) (min int, max int) {
+        min = math.MaxInt32
+		max = math.MinInt32
+        for i:=0; i < len(nums); i++ {
+            if nums[i] < min {
+                min = nums[i]
+            }
+            if nums[i] > max {
+                max = nums[i]
+            }
+        }
+        return min, max
+    }
+    // 获取最大最小值
+    min, max := getMinMax(nums)
+    // 创建桶
+    tmpNums := make([]int, max - min + 1)
+    // 数据入桶
+    for i:=0; i < len(nums); i++ {
+        tmpNums[nums[i]-min]++
+    }
+    // 数据出桶
+    j := 0
+    for i, v := range tmpNums {
+        for v > 0 {
+            nums[j] = i + min
+            j++
+            v--
+        }
+    }
+    return nums
+}
+```
+
